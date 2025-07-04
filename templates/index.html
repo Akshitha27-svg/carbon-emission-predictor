@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CO₂ Emission Predictor</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f0f4f8;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        header {
+            background-color: #004d40;
+            color: white;
+            width: 100%;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 28px;
+        }
+
+        section {
+            background-color: #ffffff;
+            margin: 40px auto 20px auto;
+            padding: 30px;
+            max-width: 900px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            line-height: 1.6;
+        }
+
+        section h2 {
+            color: #004d40;
+        }
+
+        form {
+            background-color: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: 600;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+        }
+
+        input[type="submit"] {
+            width: 100%;
+            padding: 12px;
+            margin-top: 20px;
+            border: none;
+            border-radius: 6px;
+            background-color: #00695c;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .result {
+            margin-top: 25px;
+            font-size: 18px;
+            font-weight: bold;
+            color: green;
+            text-align: center;
+        }
+
+        canvas {
+            max-width: 400px;
+            margin: 30px auto;
+        }
+
+        footer {
+            margin-top: 40px;
+            padding: 15px;
+            text-align: center;
+            font-size: 14px;
+            color: #555;
+            background-color: #e0f2f1;
+            width: 100%;
+            border-top: 1px solid #ccc;
+        }
+
+        @media (max-width: 480px) {
+            form {
+                padding: 20px;
+            }
+            h1 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>🌍 CO₂ Emission Predictor</h1>
+</header>
+
+<!-- 📊 Informational Section First -->
+<section>
+    <h2>📊 Why Carbon Emission Prediction Matters</h2>
+    <p>According to the <strong>International Energy Agency</strong>, global CO₂ emissions from energy hit a record high of <strong>36.8 billion metric tons</strong> in 2022. Predicting and managing emissions is crucial to achieving climate targets under the <strong>Paris Agreement</strong>.</p>
+
+    <h2>✅ Advantages of CO₂ Emission Prediction</h2>
+    <ul>
+        <li>Helps governments plan sustainable policies</li>
+        <li>Supports industries in reducing their carbon footprint</li>
+        <li>Enables early detection of high-risk sectors</li>
+        <li>Promotes awareness and climate accountability</li>
+    </ul>
+
+    <h2>🔭 Future Scope</h2>
+    <ul>
+        <li>Integrate real-time satellite or IoT emission data</li>
+        <li>Include transportation, agriculture, and residential sector analysis</li>
+        <li>Predict regional or seasonal carbon trends</li>
+        <li>Enable AI-driven climate policy simulations</li>
+    </ul>
+
+    <h2>📈 Statistical Insight</h2>
+    <p>Did you know? Just 20 countries are responsible for over <strong>80%</strong> of global emissions. Accurate prediction tools are key to reducing global warming by <strong>1.5°C</strong>.</p>
+</section>
+
+<!-- 🧪 Prediction Form -->
+<form method="POST" action="/predict">
+    <label for="f1">GDP per capita:</label>
+    <input type="text" name="f1" required>
+
+    <label for="f2">Energy consumption per capita:</label>
+    <input type="text" name="f2" required>
+
+    <label for="f3">Urban population %:</label>
+    <input type="text" name="f3" required>
+
+    <label for="f4">Total population:</label>
+    <input type="text" name="f4" required>
+
+    <label for="f5">Renewable energy usage %:</label>
+    <input type="text" name="f5" required>
+
+    <label for="f6">CO₂ intensity of energy:</label>
+    <input type="text" name="f6" required>
+
+    <label for="f7">Industry emissions per capita:</label>
+    <input type="text" name="f7" required>
+
+    <input type="submit" value="Predict">
+</form>
+
+<!-- 🔍 Output and Chart -->
+{% if prediction_text %}
+    <div class="result">{{ prediction_text }}</div>
+    <canvas id="resultChart"></canvas>
+    <script>
+        const prediction = parseFloat("{{ prediction_text.split(':')[-1].strip().split(' ')[0] }}");
+        const ctx = document.getElementById('resultChart').getContext('2d');
+        const chart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Predicted CO₂ Emission'],
+                datasets: [{
+                    label: 'Tons per capita',
+                    data: [prediction],
+                    backgroundColor: '#26a69a'
+                }]
+            },
+            options: {
+                scales: {
+                    y: { beginAtZero: true }
+                },
+                plugins: {
+                    legend: { display: false }
+                }
+            }
+        });
+    </script>
+{% endif %}
+
+<footer>
+    &copy; 2025 CO₂ Predictor | Built by Akshitha 🌱
+</footer>
+
+</body>
+</html>

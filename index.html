@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Carbon Emission Predictor</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            background-color: #f4f4f4;
+        }
+        form {
+            padding: 20px;
+            background-color: #fff;
+            width: 360px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        label {
+            margin-top: 10px;
+            display: block;
+            font-weight: bold;
+        }
+        input[type="text"], input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+        h1 {
+            margin-bottom: 20px;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            color: green;
+        }
+    </style>
+</head>
+<body>
+    <h1>Predict CO₂ Emissions</h1>
+    <form method="POST" action="/predict">
+        <label for="f1">GDP per capita:</label>
+        <input type="text" name="f1" required>
+
+        <label for="f2">Energy consumption per capita:</label>
+        <input type="text" name="f2" required>
+
+        <label for="f3">Urban population %:</label>
+        <input type="text" name="f3" required>
+
+        <label for="f4">Total population:</label>
+        <input type="text" name="f4" required>
+
+        <label for="f5">Renewable energy usage %:</label>
+        <input type="text" name="f5" required>
+
+        <label for="f6">CO₂ intensity of energy:</label>
+        <input type="text" name="f6" required>
+
+        <label for="f7">Industry emissions per capita:</label>
+        <input type="text" name="f7" required>
+
+        <input type="submit" value="Predict">
+    </form>
+
+    {% if prediction_text %}
+        <div class="result">{{ prediction_text }}</div>
+    {% endif %}
+</body>
+</html>
